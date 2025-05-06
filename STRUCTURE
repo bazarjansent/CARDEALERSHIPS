@@ -1,0 +1,53 @@
+honda-dealership/
+├── assets/
+│   ├── images/
+│   │   ├── logo.png
+│   │   ├── civic.jpg
+│   │   ├── accord.jpg
+│   │   ├── crv.jpg
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── scripts.js
+├── includes/
+│   ├── db_connect.php
+│   ├── header.php
+│   ├── footer.php
+├── index.php
+├── about.php
+├── services.php
+├── contact.php
+├── user_portal.php
+├── register.php
+├── login.php
+├── feedback.php
+├── comments.php
+└── database.sql
+
+CREATE DATABASE honda_dealership;
+USE honda_dealership;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fullname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    feedback TEXT NOT NULL,
+    contact_preference ENUM('email', 'phone') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
