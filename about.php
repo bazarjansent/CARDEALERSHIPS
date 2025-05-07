@@ -1,7 +1,9 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
-include 'includes/db_connect.php';
-include 'includes/header.php';
+include realpath(__DIR__ . '/includes/db_connect.php') ?: die('Error: db_connect.php not found');
+include realpath(__DIR__ . '/includes/header.php') ?: die('Error: header.php not found');
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +29,7 @@ include 'includes/header.php';
             <div class="timeline-item" data-year="2020">Introduced hybrid models</div>
         </div>
     </section>
-    <?php include 'includes/footer.php'; ?>
+    <?php include realpath(__DIR__ . '/includes/footer.php') ?: die('Error: footer.php not found'); ?>
     <script src="assets/js/scripts.js"></script>
 </body>
 </html>
