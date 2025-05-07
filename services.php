@@ -1,7 +1,9 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
-include 'includes/db_connect.php';
-include 'includes/header.php';
+include realpath(__DIR__ . '/includes/db_connect.php') ?: die('Error: db_connect.php not found');
+include realpath(__DIR__ . '/includes/header.php') ?: die('Error: header.php not found');
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +36,35 @@ include 'includes/header.php';
                 <p>Price: $35,000</p>
                 <a href="register.php" class="btn">Order Now</a>
             </div>
+            <div class="car-card">
+               <img src="assets/images/pilot.jpg" alt="Honda Pilot">
+               <h3>Honda Pilot</h3>
+               <p>Price: $40,000</p>
+               <a href="register.php" class="btn">Order Now</a>
+            </div>
+            <div class="car-card">
+               <img src="assets/images/hrv.jpg" alt="Honda HR-V">
+               <h3>Honda HR-V</h3>
+               <p>Price: $28,000</p>
+               <a href="register.php" class="btn">Order Now</a>
+            </div>
         </div>
     </section>
-    <?php include 'includes/footer.php'; ?>
+    <?php include realpath(__DIR__ . '/includes/footer.php') ?: die('Error: footer.php not found'); ?>
     <script src="assets/js/scripts.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
