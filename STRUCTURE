@@ -35,19 +35,72 @@ CREATE TABLE users (
     phone VARCHAR(15) NOT NULL
 );
 
-CREATE TABLE feedback (
+-- Create the database
+CREATE DATABASE IF NOT EXISTS honda_dealership_db;
+USE honda_dealership_db;
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    feedback TEXT NOT NULL,
-    contact_preference ENUM('email', 'phone') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    fullname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE comments (
+-- Comments table
+CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Feedback table
+CREATE TABLE IF NOT EXISTS feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    feedback TEXT NOT NULL,
+    contact_preference VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Cars table (implied from the context of a Honda Dealership)
+CREATE TABLE IF NOT EXISTS cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    model VARCHAR(100) NOT NULL,
+    year INT NOT NULL,
+    color VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(255),
+    available BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Sample data for users table (password is 'password123' hashed)
+INSERT INTO users (fullname, email, password, phone) VALUES
+('Jansent Bazar', 'jansent9bazar@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '123-456-7890'),
+('R-ney Totanes', 'r-neytotanes@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '987-654-3210');
+
+-- Sample data for cars table
+INSERT INTO cars (model, year, color, price, description, image_url, available) VALUES
+('Honda Civic', 2023, 'Red', 22500.00, 'Fuel-efficient and sporty design with the latest tech features.', 'assets/images/civic.jpg', TRUE),
+('Honda Accord', 2023, 'Blue', 27500.00, 'Spacious sedan with premium interior and advanced safety features.', 'assets/images/accord.jpg', TRUE),
+('Honda CR-V', 2023, 'Silver', 32000.00, 'Versatile SUV with ample cargo space and all-weather capability.', 'assets/images/crv.jpg', TRUE),
+('Honda Pilot', 2023, 'Black', 39500.00, 'Three-row SUV perfect for families, with powerful engine and towing capacity.', 'assets/images/pilot.jpg', TRUE),
+('Honda HR-V', 2023, 'White', 24500.00, 'Compact crossover with flexible interior and excellent fuel economy.', 'assets/images/hrv.jpg', TRUE);
+
+-- Sample data for comments table
+INSERT INTO comments (user_id, comment) VALUES
+(1, 'Great experience with the sales team!'),
+(2, 'Love my new Honda Civic, thanks for the excellent service.');
+
+-- Sample data for feedback table
+INSERT INTO feedback (user_id, feedback, contact_preference) VALUES
+(1, 'The dealership was clean and the staff was friendly.', 'email'),
+(2, 'Would appreciate longer service hours on weekends.', 'phone'),
+(NULL, 'Your website is easy to navigate!', 'email');
