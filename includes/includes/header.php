@@ -1,3 +1,8 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +12,7 @@
 </head>
 <body>
     <header>
-        <img src="assets/images/logo.png" alt="Honda Dealership Logo" class="logo">
+        <img src="assets/images/hondalogo.jpg" alt="Honda Dealership Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
